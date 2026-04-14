@@ -1,0 +1,27 @@
+class Solution(object):
+    def largestSumAfterKNegations(self, nums, k):
+        cnt = [0 for _ in range(202)]
+        
+        for num in nums:
+            cnt[num + 100] += 1
+        
+        idx = 0
+        
+        while k > 0:
+            while cnt[idx] == 0:
+                idx += 1
+            
+            cnt[idx] -= 1
+            cnt[200 - idx] += 1
+            
+            if idx > 100:
+                idx = 200 - idx
+            
+            k -= 1
+        
+        ans = 0
+        
+        for i in range(201):
+            ans += cnt[i] * (i - 100)
+        
+        return ans
